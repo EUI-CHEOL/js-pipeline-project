@@ -34,6 +34,13 @@ pipeline {
             }
          }
       }
+      stage("Tag and Push") {
+         steps {
+                sh "docker tag jenkins-pipeline_web:latest euicheol/jenkins-app:${BUILD_NUMBER}"
+                sh "docker login -u euicheol -p 2fjsqudtlS*"
+                sh "docker push euicheol/jenkins-app:${BUILD_NUMBER}"
+         }
+      }
       stage("deploy") {
          steps {
             sh "docker-compose up -d"
